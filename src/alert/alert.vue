@@ -1,4 +1,14 @@
 <script setup>
+import { onMounted } from "vue";
+
+onMounted(() => {
+  // TODO
+  // Move the file path to .env and use `new URL()` to find it?
+  const audio = new Audio("../../public/telegraph.mp3");
+
+  audio.play();
+});
+
 const openOnDashboard = (event) => {
   if (window.api) {
     event.preventDefault();
