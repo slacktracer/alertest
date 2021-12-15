@@ -1,8 +1,6 @@
 import { app, BrowserWindow, ipcMain, shell } from "electron";
 import path from "path";
 
-const alertWindows = [];
-
 ipcMain.on("openOnDashboard", (event, { caseID }) => {
   caseID;
   const baseURL = "https://ondeck.twiagemed.net";
@@ -91,13 +89,6 @@ const createWindow = async ({ mode } = {}) => {
     };
 
     return newWindowConfiguration;
-  });
-
-  window.on("close", () => {
-    alertWindows.forEach(
-      (alertWindow) =>
-        alertWindow.isDestroyed() === false && alertWindow.close()
-    );
   });
 
   return window;
