@@ -1,0 +1,14 @@
+{
+  "main": "main.js",
+  "devDependencies": {
+    "electron": "^16.0.4"
+  },
+  "dependencies": {
+    "esm": "^3.2.25"
+  },
+  "name": "alertest-shell",
+  "scripts": {
+    "start": "electron main.development.js"
+  },
+  "version": "1.0.0"
+}
