@@ -1,26 +1,14 @@
-import { app, BrowserWindow, ipcMain } from "electron";
+import { app, BrowserWindow, ipcMain, shell } from "electron";
 import path from "path";
 
 const alertWindows = [];
 
-ipcMain.on('alerts', (event, { title, url }) => {
-  const alertWindow = new BrowserWindow({
-    height: 600,
-    width: 800,
-    webPreferences: {
-      enableRemoteModule: false,
-      nodeIntegration: false,
-      preload: path.join(app.getAppPath(), "preload.js"),
-      sandbox: true
-    },
-  });
+ipcMain.on('openOnDashboard', (event, { caseID }) => {
+  caseID;
+  const baseURL = "https://ondeck.twiagemed.net";
+  const path = "/cases/"; // const path = `/cases/${caseID}`;
 
-  alertWindows.push(alertWindow);
-
-  alertWindow.setMenuBarVisibility(false);
-  alertWindow.setTitle(title);
-
-  alertWindow.loadURL(url);
+  shell.openExternal(`${baseURL}${path}`);
 })
 
 let window;
@@ -34,7 +22,7 @@ export const make = ({ mode }) => {
     return;
   }
 
-  app.whenReady().then(() => createWindow({ mode }).then(windowValue => window = windowValue));
+  app.whenReady().then(() => createWindow({ mode }).then(createdWindow => window = createdWindow));
 
   app.on("second-instance", () => {
     if (window) {
@@ -53,18 +41,20 @@ export const make = ({ mode }) => {
 
   app.on("activate", () => {
     if (BrowserWindow.getAllWindows().length === 0) {
-      createWindow({ mode });
+      window = createWindow({ mode });
     }
   });
 };
 
 const createWindow = async ({ mode } = {}) => {
   const window = new BrowserWindow({
+    autoHideMenuBar: true,
     icon: "../public/redbird.png",
-    height: 800,
+    height: 600,
     width: 600,
     webPreferences: {
       enableRemoteModule: true,
+      nativeWindowOpen: false,
       nodeIntegration: true,
       preload: path.join(app.getAppPath(), "preload.js"),
       sandbox: true
@@ -81,12 +71,23 @@ const createWindow = async ({ mode } = {}) => {
     await window.loadFile(fallbackFilePath);
   }
 
-  window.setMenuBarVisibility(false);
-  window.setTitle("Twiage Alert System");
-
   if (mode === "development") {
     window.webContents.openDevTools();
   }
+
+  window.webContents.setWindowOpenHandler(() => {
+    const newWindowConfiguration = {
+      action: "allow",
+      overrideBrowserWindowOptions: {
+        autoHideMenuBar: true,
+        webPreferences: {
+          preload: path.join(app.getAppPath(), "preload.js"),
+        },
+      }
+    };
+
+    return newWindowConfiguration;
+  });
 
   window.on('close', () => {
     alertWindows.forEach(alertWindow => alertWindow.isDestroyed() === false && alertWindow.close());
