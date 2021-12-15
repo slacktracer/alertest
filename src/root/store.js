@@ -1,10 +1,10 @@
 import { createLogger, createStore } from "vuex";
 
-import { home } from "../home/store/home.store"
+import { home } from "../home/store/home.store";
 
 export const store = createStore({
   modules: {
-    home
+    home,
   },
-  plugins: [createLogger()]
+  plugins: [createLogger()],
 });

@@ -3,13 +3,13 @@ import path from "path";
 
 const alertWindows = [];
 
-ipcMain.on('openOnDashboard', (event, { caseID }) => {
+ipcMain.on("openOnDashboard", (event, { caseID }) => {
   caseID;
   const baseURL = "https://ondeck.twiagemed.net";
   const path = "/cases/"; // const path = `/cases/${caseID}`;
 
   shell.openExternal(`${baseURL}${path}`);
-})
+});
 
 let window;
 
@@ -22,7 +22,11 @@ export const make = ({ mode }) => {
     return;
   }
 
-  app.whenReady().then(() => createWindow({ mode }).then(createdWindow => window = createdWindow));
+  app
+    .whenReady()
+    .then(() =>
+      createWindow({ mode }).then((createdWindow) => (window = createdWindow))
+    );
 
   app.on("second-instance", () => {
     if (window) {
@@ -57,7 +61,7 @@ const createWindow = async ({ mode } = {}) => {
       nativeWindowOpen: false,
       nodeIntegration: true,
       preload: path.join(app.getAppPath(), "preload.js"),
-      sandbox: true
+      sandbox: true,
     },
   });
 
@@ -83,15 +87,18 @@ const createWindow = async ({ mode } = {}) => {
         webPreferences: {
           preload: path.join(app.getAppPath(), "preload.js"),
         },
-      }
+      },
     };
 
     return newWindowConfiguration;
   });
 
-  window.on('close', () => {
-    alertWindows.forEach(alertWindow => alertWindow.isDestroyed() === false && alertWindow.close());
-  })
+  window.on("close", () => {
+    alertWindows.forEach(
+      (alertWindow) =>
+        alertWindow.isDestroyed() === false && alertWindow.close()
+    );
+  });
 
   return window;
 };

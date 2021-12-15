@@ -18,7 +18,7 @@ const openOnDashboard = (event) => {
           @click="openOnDashboard"
           href="https://ondeck.twiagemed.net"
           target="dashboard"
-          >
+        >
           Open on Dashboard
         </a>
       </div>

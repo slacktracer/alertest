@@ -1,8 +1,6 @@
-const { contextBridge, ipcRenderer } = require('electron')
+const { contextBridge, ipcRenderer } = require("electron");
 
-contextBridge.exposeInMainWorld(
-  'api',
-  {
-    openOnDashboard: ({ caseID }) => ipcRenderer.send("openOnDashboard", { caseID })
-  }
-)
+contextBridge.exposeInMainWorld("api", {
+  openOnDashboard: ({ caseID }) =>
+    ipcRenderer.send("openOnDashboard", { caseID }),
+});

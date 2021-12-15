@@ -8,8 +8,8 @@ import root from "./root/root.vue";
 import { router } from "./root/router";
 import { store } from "./root/store";
 
-const app = createApp(root)
+const app = createApp(root);
 
-app.use(router)
-app.use(store)
+app.use(router);
+app.use(store);
 app.mount("#root");
