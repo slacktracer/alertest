@@ -16,9 +16,9 @@ const alert = () => {
   localStorage.setItem(alertID, JSON.stringify(data));
 };
 
-const incrementNumber = () => store.commit("home/incrementNumber");
+const incrementNumber = () => store.commit("main/incrementNumber");
 
-const number = computed(() => store.state.home.number);
+const number = computed(() => store.state.main.number);
 </script>
 
 <template>

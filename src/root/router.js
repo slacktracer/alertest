@@ -1,7 +1,7 @@
 import { createWebHistory, createRouter } from "vue-router";
 
 import alert from "../alert/alert.vue";
-import home from "../home/home.vue";
+import main from "../main/main.vue";
 
 // TODO
 // Make routes async the lighten as much as possible the initial load for alerts!
@@ -13,8 +13,8 @@ const routes = [
   },
   {
     path: "/",
-    name: "home",
-    component: home,
+    name: "main",
+    component: main,
   },
 ];
 
