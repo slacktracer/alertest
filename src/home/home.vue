@@ -5,9 +5,15 @@ import { useStore } from "vuex";
 const store = useStore();
 
 const alert = () => {
-  const url = "http://localhost:3000/alert";
+  const alertID = String(Math.random() * 10_000_000_000_000_000);
+
+  const data = { createdAt: new Date(), data: "Whoa." };
+
+  const url = `http://localhost:3000/alert?id=${alertID}`;
 
   window.open(url, `alertWindow${Date.now()}`, "height=500,width=800");
+
+  localStorage.setItem(alertID, JSON.stringify(data));
 };
 
 const incrementNumber = () => store.commit("home/incrementNumber");

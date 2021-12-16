@@ -1,5 +1,7 @@
 <script setup>
-import { onMounted } from "vue";
+import { onMounted, ref } from "vue";
+
+let data = ref(null);
 
 onMounted(() => {
   // TODO
@@ -7,6 +9,14 @@ onMounted(() => {
   const audio = new Audio("../../public/telegraph.mp3");
 
   audio.play();
+
+  const urlParams = new URLSearchParams(window.location.search);
+
+  const id = urlParams.get("id");
+
+  data.value = JSON.parse(localStorage.getItem(id));
+
+  localStorage.removeItem(id);
 });
 
 const openOnDashboard = (event) => {
@@ -23,6 +33,9 @@ const openOnDashboard = (event) => {
     <div class="row">
       <div class="col-sm">
         <p>This is an alert.</p>
+        <div class="alert alert-dark" role="alert">
+          {{ data }}
+        </div>
         <a
           class="btn btn-outline-primary"
           @click="openOnDashboard"
