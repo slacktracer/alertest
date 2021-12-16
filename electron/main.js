@@ -2,11 +2,14 @@ import { app, BrowserWindow, ipcMain, shell } from "electron";
 import path from "path";
 
 ipcMain.on("openOnDashboard", (event, { caseID }) => {
-  caseID;
   const baseURL = "https://ondeck.twiagemed.net";
   const path = "/cases/"; // const path = `/cases/${caseID}`;
 
-  shell.openExternal(`${baseURL}${path}`);
+  shell.openExternal(`${baseURL}${path}${caseID}`);
+});
+
+ipcMain.on("focusMe", (event) => {
+  event.sender.focus();
 });
 
 let window;

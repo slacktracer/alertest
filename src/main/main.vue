@@ -4,38 +4,24 @@ import { useStore } from "vuex";
 
 const store = useStore();
 
-const alert = () => {
-  const alertID = String(Math.random() * 10_000_000_000_000_000);
-
-  const data = { createdAt: new Date(), data: "Whoa." };
-
-  const url = `http://localhost:3000/alert?id=${alertID}`;
-
-  window.open(url, `alertWindow${Date.now()}`, "height=500,width=800");
-
-  localStorage.setItem(alertID, JSON.stringify(data));
-};
-
 const incrementNumber = () => store.commit("main/incrementNumber");
 
 const number = computed(() => store.state.main.number);
+
+store.dispatch("main/connectToPubNub");
 </script>
 
 <template>
-  <div class="container mt-5">
+  <div class="container mb-5 mt-5">
     <div class="row">
       <div class="col-sm">
         <h1>
-          Twiage Alert System
+          Twiage Alerter
           <span @click="incrementNumber" title="Click to upgrade">
             {{ number }}
           </span>
         </h1>
-        <p class="text-muted">
-          This is all just placeholder flavour text. I dislike the word
-          <i>alerter</i>. 🤢
-        </p>
-        <button class="btn btn-danger" @click="alert">Alert!</button>
+        <p class="text-muted">Be Alerter!</p>
       </div>
     </div>
   </div>

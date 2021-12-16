@@ -1,6 +1,10 @@
 <script setup>
 import { onMounted, ref } from "vue";
 
+const urlParams = new URLSearchParams(window.location.search);
+
+const caseID = urlParams.get("caseID");
+
 let data = ref(null);
 
 onMounted(() => {
@@ -10,28 +14,26 @@ onMounted(() => {
 
   audio.play();
 
-  const urlParams = new URLSearchParams(window.location.search);
+  data.value = JSON.parse(localStorage.getItem(caseID));
 
-  const id = urlParams.get("id");
+  window.focus();
 
-  data.value = JSON.parse(localStorage.getItem(id));
-
-  // TODO
-  // Move the removal to the unload event. Just to avoid weird behavior caused by hot reload during development.
-  localStorage.removeItem(id);
+  if (window.api) {
+    window.api.focusMe();
+  }
 });
 
 const openOnDashboard = (event) => {
   if (window.api) {
     event.preventDefault();
 
-    window.api.openOnDashboard({ caseID: 0 });
+    window.api.openOnDashboard({ caseID });
   }
 };
 </script>
 
 <template>
-  <div class="container mt-5">
+  <div class="container mb-5 mt-5">
     <div class="row">
       <div class="col-sm">
         <p>This is an alert.</p>

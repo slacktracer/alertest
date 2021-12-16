@@ -6,7 +6,7 @@
   "dependencies": {
     "esm": "^3.2.25"
   },
-  "name": "alertest-shell",
+  "name": "alerter-shell",
   "scripts": {
     "start": "electron main.development.js"
   },
