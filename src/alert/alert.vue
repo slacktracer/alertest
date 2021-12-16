@@ -16,6 +16,8 @@ onMounted(() => {
 
   data.value = JSON.parse(localStorage.getItem(id));
 
+  // TODO
+  // Move the removal to the unload event. Just to avoid weird behavior caused by hot reload during development.
   localStorage.removeItem(id);
 });
 
